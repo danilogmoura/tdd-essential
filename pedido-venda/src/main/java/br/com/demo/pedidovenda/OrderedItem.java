@@ -26,6 +26,10 @@ public final class OrderedItem {
         return quantity;
     }
 
+    public double getTotalValue() {
+        return unitaryValue * quantity;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (obj == this) return true;
@@ -48,5 +52,6 @@ public final class OrderedItem {
                 "unitaryValue=" + unitaryValue + ", " +
                 "quantity=" + quantity + ']';
     }
+
 
 }

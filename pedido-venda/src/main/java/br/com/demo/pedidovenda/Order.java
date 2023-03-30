@@ -1,19 +1,28 @@
 package br.com.demo.pedidovenda;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Order {
 
-    private double amount;
-    private double discount;
+    private final List<OrderedItem> orderedItems = new ArrayList<>();
 
     public void addItem(OrderedItem orderedItem) {
-        amount += orderedItem.unitaryValue() * orderedItem.quantity();
+        orderedItems.add(orderedItem);
     }
 
-    public double getAmount() {
-        return amount;
-    }
+    public OrderSummary summarize() {
+        double totalValue = orderedItems.stream().mapToDouble(OrderedItem::getTotalValue).sum();
+        double discount = 0;
 
-    public double getDiscount() {
-        return 0.0;
+        if (totalValue >= 1000) {
+            discount = totalValue * 0.08;
+        } else if (totalValue >= 800) {
+            discount = totalValue * 0.06;
+        } else if (totalValue >= 300) {
+            discount = totalValue * 0.04;
+        }
+
+        return new OrderSummary(totalValue, discount);
     }
 }
